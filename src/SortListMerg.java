@@ -1,3 +1,4 @@
+
 public class SortListMerg {
     class ListNode {
         int val;
@@ -15,47 +16,33 @@ public class SortListMerg {
         if (head == null || head.next == null) {
             return head;
         }
-        ListNode first = head;
-        ListNode p1 = first;
-        ListNode second = head.next;
-        ListNode p2 = second;
-        ListNode p = head.next.next;
-        while (p != null && p.next != null) {
-            p1.next = p;
-            p1 = p1.next;
-            p2.next = p.next;
-            p2 = p2.next;
-            p = p.next.next;
+        ListNode slow = head;
+        ListNode fast = head.next;
+        while (fast.next != null && fast.next.next != null) {
+        	fast = fast.next.next;
+        	slow = slow.next;
         }
-        p1.next = p;
-        p2.next = null;
-        ListNode left = sort(first);
-        ListNode right = sort(second);
+        
+        ListNode left = sort(slow.next);
+        slow.next = null;
+        ListNode right = sort(head);
         head = merge(left, right);
         return head;
     }
     
     private ListNode merge(ListNode left, ListNode right) {
-        ListNode head = null;
-        ListNode last = null;
+        ListNode head = new ListNode(0);
+        ListNode last = head;
         while (left != null && right != null) {
-            ListNode item;
             if (left.val > right.val) {
-                item = right;
+            	last.next = right;
                 right = right.next;
             }
             else {
-                item = left;
+                last.next = left;
                 left = left.next;
             }
-            if (head == null) {
-                head = item;
-                last = item;
-            }
-            else {
-                last.next = item;
-                last = last.next;
-            }
+            last = last.next;
         }
         while (left != null) {
             last.next = left;
@@ -67,7 +54,7 @@ public class SortListMerg {
             last = last.next;
             right = right.next;
         }
-        return head;
+        return head.next;
     }
     public ListNode creatList(int[] arr) {
         ListNode head;
