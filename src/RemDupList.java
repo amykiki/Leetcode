@@ -1,5 +1,5 @@
 
-public class WordPattern {
+public class RemDupList {
     public ListNode deleteDuplicates(ListNode head) {
         if (head == null || head.next == null) return head;
         ListNode pHead = head;
