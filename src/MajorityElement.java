@@ -1,27 +1,25 @@
-import java.util.HashMap;
-
 public class MajorityElement {
     public int majorityElement(int[] nums) {
-        int majority = 0;
-        int capacity = (nums.length+ 1)/2;
-        HashMap<Integer, Integer> count = new HashMap<>(capacity);
-        for (int i = 0; i < nums.length; i++) {
-            int key = nums[i];
-            int value = 1;
-            if (count.containsKey(key)) {
-                value = count.get(key) + 1;
+        int majority = nums[0];
+        int count = 1;
+        for (int i = 1; i < nums.length; i++) {
+            int value = nums[i];
+            if (majority != value) {
+                count--;
             }
-            count.put(key, value);
-            if (value >= capacity) {
-                majority = key;
-                break;
+            else {
+                count++;
+            }
+            if (count == 0) {
+                majority = value;
+                count++;
             }
         }
         return majority;
     }
     
     public static void main (String[] args) {
-        int[] nums = {3, 1, 2, 3};
+        int[] nums = {3, 2, 2, 4, 3, 9, 3};
         MajorityElement me = new MajorityElement();
         int majority = me.majorityElement(nums);
         System.out.println("majority is " + majority);
