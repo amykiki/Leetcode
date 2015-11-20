@@ -1,8 +1,9 @@
 public class MedianSortArray {
     public double findMedianSortedArrays(int[] nums1, int[] nums2) {
         double median = 0.0;
+        int medianCurrent = -1;
+        int medianNext = -1;
         int length = nums1.length + nums2.length;
-        int[] nums0 = new int[length];
         int index0 = 0;
         int median0Index = (length - 1) / 2;
         int isOdd = (length) % 2;
@@ -34,84 +35,70 @@ public class MedianSortArray {
             median = ((double) value1 + value2) / 2.0;
             return median;
         }
-        while ((find == 0) && (low1 <= high1)) {
+        while (find == 0 && low1 <= high1) {
             int median1Index = (low1 + high1) / 2;
             median1 = nums1[median1Index];
             index2 = binarySearch(median1, nums2, low2, high2);
             index0 = median1Index + index2;
-            nums0[index0] = median1;
             if (index0 == median0Index) {
-                if (isOdd == 1) {
-                    median = (double) median1;
-                }
-                else {
+                medianCurrent = median1;
+                find = 1;
+                if (isOdd == 0) {
                     int value1 = 0;
                     int value2 = 0;
-                    int value  = 0;
                     if ((median1Index + 1) < nums1.length) {
                         value1 = nums1[median1Index + 1];
                         if (index2 < nums2.length) {
                             value2 = nums2[index2];
                             if (value1 <= value2) {
-                                value = value1;
+                                medianNext = value1;
                             }
                             else {
-                                value = value2;
+                                medianNext = value2;
                             }
                         }
                         else {
-                            value = value1;
+                            medianNext = value1;
                         }
                     }
                     else {
-                        value = nums2[index2];
+                        medianNext = nums2[index2];
                     }
-                    
-                    median = ((double) median1 + value) / 2.0;
                 }
-                find = 1;
             }
             else if (index0 < median0Index) {
                 low1 = median1Index + 1;
                 low2 = index2;
             }
             else {
+                if (index0 == (median0Index + 1)) {
+                    medianNext = median1;
+                }
                 high1 = median1Index - 1;
                 high2 = index2 - 1;
             }
         }
+        
+        
         if (find == 0) {
             if (index0 < median0Index) {
-                index2--;
-            }
-            
-            while (index0 != median0Index) {
-                if (index0 < median0Index) {
-                    index2++;
-                    index0++;
-                }
-                else {
-                    index2--;
-                    index0--;
-                }
-            }
-            int value1 = nums2[index2];
-            if (isOdd == 1) {
-                median = (double) value1;
+                index2 = index2 + (median0Index - index0) - 1;
             }
             else {
-                int value2 = 0;
-                if ((index2 + 1) < nums2.length) {
-                    value2 = nums2[index2+1];
-                    if (nums0[median0Index+1] >= value1 && nums0[median0Index+1] <= value2) {
-                        value2 = nums0[median0Index+1];
-                    }
-                }
-                else {
-                    value2 = nums0[median0Index+1];
-                }
-                median = ((double) value1 + value2) / 2.0;
+                index2 = index2 - (index0 - median0Index);
             }
+            
+            medianCurrent = nums2[index2];
+        }
+        
+        if (isOdd == 1) {
+            median = (double) medianCurrent;
+        }
+        else {
+            if (medianNext == -1) {
+                medianNext = nums2[index2+1];
+            }
+            median = ((double) medianCurrent + medianNext) / 2.0;
         }
         return median;
     }
@@ -141,8 +128,8 @@ public class MedianSortArray {
         MedianSortArray msa = new MedianSortArray();
 //        int[] nums1 = {1, 2, 3, 4, 5, 7, 12};
 //        int[] nums2 = {6, 8, 9, 10, 14};
-        int[] nums1 = {100001};
-        int[] nums2 = {100001};
+        int[] nums1 = {0};
+        int[] nums2 = {1};
         double ret = msa.findMedianSortedArrays(nums1, nums2);
         System.out.println("ret = " + ret);
 
