@@ -10,14 +10,19 @@ public class PermutationsII {
             list.add(new Integer(i));
         }
         return permuteList(list);
-//        return new ArrayList<>(permuteSub(nums, 0));
     }
-
+// 深度优先算法
     private List<List<Integer>> permuteList(List<Integer> pList) {
         List<List<Integer>> result = new ArrayList<>();
         if (pList.size() == 1) {
             result.add(pList);
         } else {
+            if (pList.size() == 2) {
+                if (pList.get(0) == pList.get(1)) {
+                   result.add(pList);
+                    return result;
+                }
+            }
             Set<Integer> heads = new HashSet<>();
             for (int i = 0; i < pList.size(); i++) {
                 Integer num = pList.get(i);
