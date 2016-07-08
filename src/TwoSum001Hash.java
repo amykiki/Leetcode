@@ -7,51 +7,16 @@ import java.util.HashMap;
 public class TwoSum001Hash {
     public int[] twoSum(int[] nums, int target) {
         int[]                    resultIndex = new int[2];
-        HashMap<Integer, String> map         = new HashMap<>();
+        HashMap<Integer, Integer> map         = new HashMap<>();
         for (int i = 0; i < nums.length; i++) {
-            StringBuilder sb   = new StringBuilder();
-            String        last = map.get(nums[i]);
-            if (last != null) {
-                sb.append(last);
-                sb.append(",");
-            }
-            sb.append(i);
-            map.put(nums[i], sb.toString());
-        }
-        for (Integer key : map.keySet()) {
-            int nextKey = target - key;
-            if (! map.containsKey(nextKey)) {
-                continue;
-            }
-            String s1 = map.get(key);
-            String s2 = map.get(nextKey);
-            String snum1 = "0";
-            String snum2 = "0";
-            int m,n;
-            if (key == nextKey) {
-                String[] sts = s1.split(",");
-                if (sts.length >= 2) {
-                    snum1 = sts[0];
-                    snum2 = sts[1];
-                } else {
-                    continue;
-                }
+            int value = nums[i];
+            int otherValue = target - value;
+            if (map.containsKey(otherValue)) {
+                resultIndex[0] = map.get(otherValue);
+                resultIndex[1] = i;
             } else {
-                String[] sts1 = s1.split(",");
-                String[] sts2 = s2.split(",");
-                snum1 = sts1[0];
-                snum2 = sts2[0];
+                map.put(value, i);
             }
-            m = Integer.parseInt(snum1);
-            n = Integer.parseInt(snum2);
-            if (m > n) {
-                int tmp = m;
-                m = n;
-                n = tmp;
-            }
-            resultIndex[0] = m;
-            resultIndex[1] = n;
-            break;
         }
         return resultIndex;
     }
