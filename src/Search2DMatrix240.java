@@ -58,13 +58,13 @@ public class Search2DMatrix240 {
 
     public static void main(String[] args) {
         Search2DMatrix240 sm = new Search2DMatrix240();
-       /* int[][] matrix = {{1, 4, 7, 11, 15},
-                          {2, 5, 8, 12, 19},
-                          {3, 6, 9, 16, 22},
+        int[][] matrix = {{1,  4,  7,  11, 15},
+                          {2,  5,  8,  12, 19},
+                          {3,  6,  9,  16, 22},
                           {10, 13, 14, 17, 24},
                           {18, 21, 23, 26, 30},
-                          {20, 25, 27, 28, 31}};*/
-        int[][] matrix = {{1, 1}};
+                          {20, 25, 27, 28, 31}};
+//        int[][] matrix = {{1, 1}};
 //        int[][] matrix = {{2},{3},{4},{5},{6},{7}};
         int target = 25;
         boolean find = sm.searchMatrix(matrix, target);
