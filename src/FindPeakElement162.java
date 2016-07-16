@@ -10,12 +10,10 @@ public class FindPeakElement162 {
         }
         boolean last = true;
         boolean current;
-        for(int i = 1; i < nums.length; i++) {
+        for (int i = 1; i < nums.length; i++) {
             current = nums[i] > nums[i - 1];
-            if (!current) {
-                if (last) {
-                    return i-1;
-                }
+            if (!current && last) {
+                return i - 1;
             }
             last = current;
         }
@@ -25,8 +23,8 @@ public class FindPeakElement162 {
     public static void main(String[] args) {
         FindPeakElement162 fp = new FindPeakElement162();
 //        int[] nums = {5,6,7,8,9,10,11,12};
-        int[] nums = {1, 2, 3, 1};
-        int peak = fp.findPeakElement(nums);
+        int[] nums = {1, 3, 2, 1};
+        int   peak = fp.findPeakElement(nums);
         System.out.println("peak = " + peak);
     }
 }
