@@ -14,27 +14,27 @@ public class BuildTree105 {
         midNodes.push(root);
         TreeNode lastNode = null;
         TreeNode curNode;
-        int      i        = 0;
-        int      j        = 1;
-        while (j < preorder.length) {
-            if (!midNodes.isEmpty() && inorder[i] == midNodes.peek().val) {
+        int      in        = 0;
+        int      pre        = 1;
+        while (pre < preorder.length) {
+            if (!midNodes.isEmpty() && inorder[in] == midNodes.peek().val) {
                 lastNode = midNodes.pop();
-                i++;
+                in++;
             } else {
-                curNode = new TreeNode(preorder[j]);
+                curNode = new TreeNode(preorder[pre]);
                 if (lastNode != null) {
                     lastNode.right = curNode;
                     lastNode = null;
                 } else {
                     midNodes.peek().left = curNode;
                 }
-                if (inorder[i] == preorder[j]) {
+                if (inorder[in] == preorder[pre]) {
                     lastNode = curNode;
-                    i++;
+                    in++;
                 } else {
                     midNodes.push(curNode);
                 }
-                j++;
+                pre++;
             }
         }
         return root;

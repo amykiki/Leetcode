@@ -8,15 +8,15 @@ public class BuildTree106 {
     public TreeNode buildTree(int[] inorder, int[] postorder) {
         TreeNode       root     = null;
         Stack<TreeNode> midNodes = new Stack<>();
-        int            j        = 0;
-        int            i        = 0;
+        int            post        = 0;
+        int            in        = 0;
         TreeNode       curNode;
-        while (i < inorder.length) {
-            if (!midNodes.isEmpty() && midNodes.peek().val == postorder[j]) {
+        while (in < inorder.length) {
+            if (!midNodes.isEmpty() && midNodes.peek().val == postorder[post]) {
                 midNodes.pop();
-                j++;
+                post++;
             } else {
-                curNode = new TreeNode(inorder[i]);
+                curNode = new TreeNode(inorder[in]);
                 if (root == null) {
                     root = curNode;
                 } else {
@@ -28,12 +28,12 @@ public class BuildTree106 {
                         midNodes.peek().right = curNode;
                     }
                 }
-                if (inorder[i] == postorder[j]) {
-                    j++;
+                if (inorder[in] == postorder[post]) {
+                    post++;
                 } else {
                     midNodes.push(curNode);
                 }
-                i++;
+                in++;
             }
         }
         return root;
