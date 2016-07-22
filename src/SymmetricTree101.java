@@ -6,6 +6,9 @@ import java.util.List;
  * Created by Amysue on 2016/7/21.
  */
 public class SymmetricTree101 {
+    /*
+    * 采用数组，效率严重降低，这不是一个好的算法
+    * 因为这种方法造成大量空间的浪费，而且对于每行，要一个一个查询，很慢*/
     public boolean isSymmetric(TreeNode root) {
         if (root == null) {
             return true;
