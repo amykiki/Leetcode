@@ -24,7 +24,7 @@ public class BinaryTree {
                     map.get(index).left = node;
                     map.put(i, node);
                 }
-                if (nodes[i + 1] != null) {
+                if ((i+1) < nodes.length && nodes[i + 1] != null) {
                     node = new TreeNode(nodes[i + 1]);
                     map.get(index).right = node;
                     map.put(i + 1, node);
