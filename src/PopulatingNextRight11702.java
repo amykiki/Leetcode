@@ -10,28 +10,21 @@ public class PopulatingNextRight11702 {
             if (first == null) {
                 if (p.left != null) {
                     first = p.left;
-                    q = p.left;
                 } else if (p.right != null) {
                     first = p.right;
-                    q = p.right;
                 }
             }
-            if (q != null) {
-                if (q == p.left) {
-                    if (p.right != null) {
-                        q.next = p.right;
-                        q = q.next;
-                    }
-                } else {
-                    if (p.left != null) {
-                        q.next = p.left;
-                        q = q.next;
-                        continue;
-                    } else if (p.right != null && q != p.right) {
-                        q.next = p.right;
-                        q = q.next;
-                    }
+            if (p.left != null) {
+                if (q != null) {
+                    q.next = p.left;
                 }
+                q = p.left;
+            }
+            if (p.right != null) {
+                if (q != null) {
+                    q.next = p.right;
+                }
+                q = p.right;
             }
             p = p.next;
             if (p == null && first != null) {
