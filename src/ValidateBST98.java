@@ -3,8 +3,8 @@ import java.util.LinkedList;
 /**
  * Created by Amysue on 2016/7/26.
  */
-public class ValidateBST {
-    public boolean isValidBST(TreeNode root) {
+public class ValidateBST98 {
+    /*public boolean isValidBST(TreeNode root) {
         if (root == null) {
             return true;
         }
@@ -36,6 +36,30 @@ public class ValidateBST {
             }
         }
         return true;
+    }*/
+    public boolean isValidBST(TreeNode root) {
+        return isValidNode(root, null, null);
+    }
+
+    private boolean isValidNode(TreeNode node, Integer low, Integer high) {
+        if (node == null) {
+            return true;
+        }
+        boolean left = true;
+        boolean right = true;
+        if (node.left != null) {
+            if (node.left.val >= node.val || (low != null && node.left.val <= low)) {
+                return false;
+            }
+            left = isValidNode(node.left, low, node.val);
+        }
+        if (node.right != null) {
+            if (node.right.val <= node.val || (high != null && node.right.val >= high)) {
+                return false;
+            }
+            right = isValidNode(node.right, node.val, high);
+        }
+        return (left&&right);
     }
 
 }
