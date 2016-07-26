@@ -13,12 +13,8 @@ public class SortedListToBST109 {
         }
         ListNode slow = low;
         ListNode fast = low;
-        while (fast != high) {
-            fast = fast.next;
-            if (fast == null || fast == high) {
-                break;
-            }
-            fast = fast.next;
+        while (fast != high && fast.next != high) {
+            fast = fast.next.next;
             slow = slow.next;
         }
         TreeNode head = new TreeNode(slow.val);
