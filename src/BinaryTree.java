@@ -100,7 +100,8 @@ public class BinaryTree {
 
     public List<Integer> inorder() {
         List<Integer> list = new ArrayList<>();
-        inorderTree(root, list);
+//        inorderTree(root, list);
+        morrisInorder(root, list);
         return list;
     }
 
@@ -119,6 +120,33 @@ public class BinaryTree {
         list.add(node.val);
         if (node.right != null) {
             inorderTree(node.right, list);
+        }
+    }
+
+    private void morrisInorder(TreeNode root, List<Integer> list) {
+        if (root == null) {
+            return;
+        }
+        TreeNode current = root;
+        TreeNode pre;
+        while (current != null) {
+            if (current.left == null) {
+                list.add(current.val);
+                current = current.right;
+            } else {
+                pre = current.left;
+                while (pre.right != null && pre.right != current) {
+                    pre = pre.right;
+                }
+                if (pre.right == null) {
+                    pre.right = current;
+                    current = current.left;
+                } else {
+                    pre.right = null;
+                    list.add(current.val);
+                    current = current.right;
+                }
+            }
         }
     }
 }

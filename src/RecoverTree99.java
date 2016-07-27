@@ -1,8 +1,12 @@
+import java.time.temporal.Temporal;
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * Created by Amysue on 2016/7/26.
  */
 public class RecoverTree99 {
-    public void recoverTree(TreeNode root) {
+    /*public void recoverTree(TreeNode root) {
         TreeNode[] results = new TreeNode[4];
         boolean result = validNode(root, null, null, results);
         if (!result && results[2] == null) {
@@ -91,12 +95,56 @@ public class RecoverTree99 {
             }
         }
         return left&&right;
+    }*/
+    public void recoverTree(TreeNode root) {
+        if (root == null) {
+            return;
+        }
+        TreeNode current, pre;
+        current = root;
+        pre = null;
+        TreeNode[] results = new TreeNode[2];
+        while (current != null) {
+            if (current.left == null) {
+                detect(results, pre, current);
+                pre = current;
+                current = current.right;
+            } else {
+                TreeNode preCur = current.left;
+                while (preCur.right != null && preCur.right != current) {
+                    preCur = preCur.right;
+                }
+                if (preCur.right == null) {
+                    preCur.right = current;
+                    current = current.left;
+                } else {
+                    detect(results, pre, current);
+                    preCur.right = null;
+                    pre = current;
+                    current = current.right;
+                }
+            }
+        }
+        if (results[0] != null) {
+            int tmp = results[0].val;
+            results[0].val = results[1].val;
+            results[1].val = tmp;
+        }
+    }
+
+    private void detect(TreeNode[] results, TreeNode pre, TreeNode cur) {
+        if (pre != null && pre.val > cur.val) {
+            if (results[0] == null) {
+                results[0] = pre;
+            }
+            results[1] = cur;
+        }
     }
 
     public static void main(String[] args) {
         RecoverTree99 rc = new RecoverTree99();
 //        Integer[] nums = {5, 3, 8, 2, 4, 7, 9, 1, null, null, null, 6};
-        Integer[] nums = {1, 3, 8, 2, 4, 7, 9, 5, null, null, null, 6};
+//        Integer[] nums = {1, 3, 8, 2, 4, 7, 9, 5, null, null, null, 6};
 //        Integer[] nums = {9, 3, 8, 2, 4, 7, 5, 1, null, null, null, 6};
 //        Integer[] nums = {5, 2, 8, 3, 4, 7, 9, 1, null, null, null, 6};
 //        Integer[] nums = {3, 5, 8, 2, 4, 7, 9, 1, null, null, null, 6};
@@ -105,6 +153,9 @@ public class RecoverTree99 {
 //        Integer[]  nums = {5, 3, 8, 9, 4, 7, 2, 1, null, null, null, 6};
 //        Integer[]  nums = {5, 3, 8, 2, 9, 7, 4, 1, null, null, null, 6};
 //        Integer[] nums = {3,null,2,null,null,null,1};
+//        Integer[] nums = {2,3,null,1};
+//        Integer[] nums = {3,null,1,null,null,2};
+        Integer[] nums = {0,1};
         BinaryTree bt   = new BinaryTree(nums);
         TreeNode   root = bt.getRoot();
         rc.recoverTree(root);
