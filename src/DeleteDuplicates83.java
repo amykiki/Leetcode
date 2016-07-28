@@ -24,8 +24,8 @@ public class DeleteDuplicates83 {
 
     public static void main(String[] args) {
         DeleteDuplicates83 dd   = new DeleteDuplicates83();
-//        int[]              nums = {1, 2, 2, 2, 2, 3, 4, 5, 5, 5, 5, 6, 7, 8, 8, 9, 10};
-        int[]              nums = {5,5};
+        int[]              nums = {1, 2, 2, 2, 2, 3, 4, 5, 5, 5, 5, 6, 7, 8, 8, 9, 10,10,10,10};
+//        int[]              nums = {5,5};
         ListNode head = ListNode.genNodes(nums);
         ListNode.printNods(head);
         head = dd.deleteDuplicates(head);
