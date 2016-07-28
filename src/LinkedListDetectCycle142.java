@@ -23,27 +23,25 @@ public class LinkedListDetectCycle142 {
             p = p.next;
             count++;
         }
+        p = head;
         ListNode q = head;
-        while (true) {
-            ListNode start = q;
-            int i = 0;
-            while (i < count) {
-                q = q.next;
-                i++;
-            }
-            if (start == q) {
-                break;
-            } else {
-                q = start.next;
-            }
+        int i = 1;
+        while (i < count) {
+            q = q.next;
+            i++;
         }
-        return q;
+
+        while (q.next != p) {
+            p = p.next;
+            q = q.next;
+        }
+        return p;
     }
 
     public static void main(String[] args) {
         LinkedListDetectCycle142 ldc = new LinkedListDetectCycle142();
-//        int[] nums = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9};
-        int[] nums = {0,1};
+        int[] nums = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9};
+//        int[] nums = {0,1};
 //        int[] nums = {0, 1};
         ListNode head = ListNode.genNodes(nums);
         ListNode tail = head;
@@ -52,12 +50,12 @@ public class LinkedListDetectCycle142 {
         }
         ListNode startnode = head;
         int i = 0;
-        int count = 0;
+        int count = 9;
         while (i < count) {
             startnode = startnode.next;
             i++;
         }
-//        tail.next = startnode;
+        tail.next = startnode;
         System.out.println(startnode.val);
         ListNode node = ldc.detectCycle(head);
         System.out.println(node.val);
