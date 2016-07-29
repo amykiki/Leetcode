@@ -27,12 +27,6 @@ public class SortList148 {
     }
 
     private ListNode sort(ListNode l1, ListNode l2) {
-        if (l1 == null) {
-            return l2;
-        }
-        if (l2 == null) {
-            return l1;
-        }
         ListNode head = new ListNode(0);
         ListNode p = head;
         while (l1 != null && l2 != null) {
@@ -57,7 +51,7 @@ public class SortList148 {
     public static void main(String[] args) {
 //        int[] nums = {1, 2, 3, 4, 5, 6, 7, 8, 9};
 //        int[] nums = {9,8,7,6,5,4,3,2,1};
-        int[] nums = {};
+        int[] nums = {9};
 //        int[] nums = {1};
         ListNode head = ListNode.genNodes(nums);
         ListNode.printNods(head);
