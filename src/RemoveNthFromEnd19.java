@@ -17,7 +17,6 @@ public class RemoveNthFromEnd19 {
             fast = fast.next.next;
             count++;
         }
-        System.out.println("count = " + count);
         int sum = 0;
         if (fast == null) {
             sum = 2*count -1;
