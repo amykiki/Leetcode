@@ -18,58 +18,48 @@ public class Divide29 {
         if (divisor == 1) {
             return dividend;
         }
+        long dividendL = (long) dividend;
+        long divisorL = (long) divisor;
         if (divisor == -1) {
-            return getPos(dividend);
-        }
-        int origian = dividend;
-        boolean negtive = false;
-        if (dividend < 0 && divisor < 0) {
-            negtive = false;
-            dividend = getPos(dividend);
-            divisor = getPos(divisor);
-        } else {
-            if (dividend < 0) {
-                negtive = true;
-                dividend = getPos(dividend);
+            if (dividendL == Integer.MIN_VALUE) {
+                return Integer.MAX_VALUE;
             }
-            if (divisor < 0) {
+            return (int)getPos(dividendL);
+        }
+        boolean negtive = false;
+        if (dividendL < 0 && divisorL < 0) {
+            negtive = false;
+            dividendL = getPos(dividendL);
+            divisorL = getPos(divisorL);
+        } else {
+            if (dividendL < 0) {
                 negtive = true;
-                divisor = getPos(divisor);
+                dividendL = getPos(dividendL);
+            }
+            if (divisorL < 0) {
+                negtive = true;
+                divisorL = getPos(divisorL);
             }
         }
         int sum = 0;
-        boolean add = true;
-        while (dividend != 0) {
-            int last = 0;
-            int     n      = divisor << 1;
+        while (dividendL != 0) {
+            long last = 0;
+            long     n      = divisorL << 1;
             boolean gt     = false;
             int     result = 1;
-            while (dividend >= n) {
-                if (n <= divisor) {
-                    break;
-                }
+            while (dividendL >= n) {
                 result = result << 1;
                 last = n;
                 n = n << 1;
                 gt = true;
             }
             if (gt) {
-                dividend -= last;
+                dividendL -= last;
                 sum += result;
-                if (add && origian == Integer.MIN_VALUE) {
-                    dividend++;
-                    add = false;
-                }
 
             } else {
-                if (dividend >= divisor) {
+                if (dividendL >= divisorL) {
                     sum += result;
-                    dividend -= divisor;
-                    if (add && origian == Integer.MIN_VALUE) {
-                        dividend++;
-                        add = false;
-                        continue;
-                    }
                 }
                 break;
             }
@@ -80,10 +70,7 @@ public class Divide29 {
         return sum;
     }
 
-    private int getPos(int num) {
-        if (num == Integer.MIN_VALUE) {
-            return Integer.MAX_VALUE;
-        }
+    private long getPos(long num) {
         return 0 - num;
     }
 
@@ -95,7 +82,9 @@ public class Divide29 {
 //        int      divisor  = 1073741824;
         int      divisor  = -3;
         int      result   = d.divide(dividend, divisor);
-//        System.out.println("result = " + result);
+        System.out.println("result = " + result);
+        long num = Integer.MIN_VALUE;
+        System.out.println(0 - num);
 //        System.out.println(Integer.MAX_VALUE);
 //        System.out.println(Integer.MIN_VALUE);
 //        System.out.println((Integer.MIN_VALUE - 1) << 2);
@@ -107,7 +96,7 @@ public class Divide29 {
 //        System.out.println(Integer.MAX_VALUE/-1073741824);
 //        System.out.println(Integer.MAX_VALUE/-2);
 //        System.out.println(Integer.MAX_VALUE/-3);
-        System.out.println(1073741823 << 1);
+//        System.out.println(1073741823 << 1);
 //        System.out.println(Integer.MAX_VALUE << 2);
 //        System.out.println(Integer.toBinaryString(dividend));
 //        System.out.println(Integer.MAX_VALUE);
