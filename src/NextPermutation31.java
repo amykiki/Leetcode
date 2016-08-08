@@ -73,5 +73,13 @@ public class NextPermutation31 {
         System.out.println(Arrays.toString(nums));
         np.nextPermutation(nums);
         System.out.println(Arrays.toString(nums));
+        System.out.println(Integer.MIN_VALUE);
+        System.out.println(Integer.toBinaryString(Integer.MIN_VALUE));
+        System.out.println(Math.ceil(11.3));
+        System.out.println(Math.ceil(-11.3));
+        System.out.println(Math.floor(11.3));
+        System.out.println(Math.floor(-11.3));
+        System.out.println(Math.round(11.3));
+        System.out.println(Math.round(-11.7));
     }
 }
