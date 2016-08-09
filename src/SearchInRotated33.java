@@ -6,26 +6,27 @@ public class SearchInRotated33 {
         int low = 0;
         int len = nums.length - 1;
         int high = len;
+        int result = -1;
         while (low < high) {
             int middle = low + (high - low)/2;
+            if (nums[middle] == target) {
+                return middle;
+            }
             if (nums[high] > nums[middle]) {
+                result = find(nums, middle + 1, high, target);
+                if (result != -1) {
+                    return result;
+                }
                 high = middle;
             } else {
+                result = find(nums, low, middle -1, target);
+                if (result != -1) {
+                    return result;
+                }
                 low = middle + 1;
             }
         }
-//        System.out.println("low = " + low);
-        if (nums[low] == target) {
-            return low;
-        } else if (nums[low] > target) {
-            return -1;
-        } else {
-            if (nums[len] < target) {
-                return find(nums, 0, low - 1, target);
-            } else {
-                return find(nums, low + 1, len, target);
-            }
-        }
+        return nums[low] == target ? low : -1;
 
     }
 
@@ -52,7 +53,7 @@ public class SearchInRotated33 {
         SearchInRotated33 si = new SearchInRotated33();
         int[] nums = {1, 2, 3, 4, 5, 6, 8, 0};
 //        int[] nums = {2, 4, 5, 6, 0,1};
-        int target = -4;
+        int target = 9;
         int result = si.search(nums, target);
         System.out.println("result = " + result);
 
