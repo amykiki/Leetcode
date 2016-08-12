@@ -135,7 +135,7 @@ public class CombinationSum39 {
                 return;
             }
             if (lastI > target) {
-                break;
+                return;
             }
             if (lastI * 2 > target) {
                 if (Arrays.binarySearch(candidates, target) >= 0) {
