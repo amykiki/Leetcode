@@ -2,6 +2,7 @@
  * Created by Amysue on 2016/8/13.
  */
 public class FirstMissingPositive41 {
+    /*这个题难点在理解题意，而不是算法*/
     public int firstMissingPositive(int[] nums) {
         int N = nums.length;
         for(int i = 0; i < nums.length; i++) {
