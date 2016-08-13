@@ -138,10 +138,11 @@ public class CombinationSum39 {
                 return;
             }
             if (lastI * 2 > target) {
-                if (Arrays.binarySearch(candidates, target) >= 0) {
+                /*if (Arrays.binarySearch(candidates, target) >= 0) {
                     addList(results, lasts, target);
                 }
-                return;
+                return;*/
+                continue;
             }
 
             lasts.add(lastI);
