@@ -30,10 +30,11 @@ public class CombinationSum40 {
                 return;
             }
             if (n * 2 > target) {
-                if (Arrays.binarySearch(candidates, i + 1, candidates.length, target) >= 0) {
+                /*if (Arrays.binarySearch(candidates, i + 1, candidates.length, target) >= 0) {
                     addList(result, last, target);
                 }
-                return;
+                return;*/
+                continue;
             }
             last.add(n);
             combine(candidates, target - n, result, last, i + 1);
