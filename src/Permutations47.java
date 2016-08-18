@@ -4,6 +4,7 @@ import java.util.*;
  * Created by Amysue on 2016/8/18.
  */
 public class Permutations47 {
+//    相比一个月的做法，在代码复杂度和运行时间上都有提高，一个月以前的运行时间为15ms，而这个办法时间为7ms，当然还不是最优的
     List<List<Integer>> results = new ArrayList<>();
     int Len = 0;
     public List<List<Integer>> permuteUnique(int[] nums) {
