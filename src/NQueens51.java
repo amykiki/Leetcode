@@ -10,44 +10,34 @@ public class NQueens51 {
     private Long               MASK    = 0L;
 
     public List<List<String>> solveNQueens(int n) {
-        if (n == 1) {
-            List<String> result = Arrays.asList("Q");
-            results.add(result);
-            return results;
-        }
-        if (n <= 3) {
-            return results;
-        }
-        Map<Integer, Integer> nq = new HashMap<>(n);
         N = n;
         MASK = (long) (1 << n) - 1;
-        addQueen(nq, 0, 0L, 0L, 0L);
+        addQueen(0, 0L, 0L, 0L, new ArrayList<>());
         return results;
     }
 
-    private void addQueen(Map<Integer, Integer> nq, int row, long col, long ld, long rd) {
+    private void addQueen(int row, long col, long ld, long rd, List<String> crt) {
         if (row == N) {
-            List<String> result1 = new ArrayList<>();
-            for (int i = 0; i < N; i++) {
-                char[] queens = new char[N];
-                Arrays.fill(queens, '.');
-                int j = nq.get(i);
-                queens[j] = 'Q';
-                result1.add(new String(queens));
-            }
-            results.add(result1);
+            results.add(new ArrayList<>(crt));
             return;
         }
         long status = ~(col | ld | rd) & MASK;
         while (status > 0) {
             long pos = status & -status;
-            int j = getJ(pos);
-            nq.put(row, j);
-            addQueen(nq, row+1, col | pos, (ld | pos)<<1, (rd | pos)>>1);
+            addStr(pos, crt);
+            addQueen(row+1, col | pos, (ld | pos)<<1, (rd | pos)>>1, crt);
             status -= pos;
+            crt.remove(row);
         }
-
         return;
+    }
+
+    private void addStr(long pos, List<String> crt) {
+        int j = getJ(pos);
+        char[] queens = new char[N];
+        Arrays.fill(queens, '.');
+        queens[j] = 'Q';
+        crt.add(new String(queens));
     }
 
     private int getJ(long pos) {
@@ -62,7 +52,7 @@ public class NQueens51 {
 
     public static void main(String[] args) {
         NQueens51 sn = new NQueens51();
-        int       n  = 7;
+        int       n  = 4;
         List<List<String>> results = sn.solveNQueens(n);
         NQueens5102        sn2      = new NQueens5102();
         List<List<String>> results2 = sn2.solveNQueens(n);
@@ -71,9 +61,9 @@ public class NQueens51 {
         System.out.println(results.size());
         System.out.println(results2.size());
 //        System.out.println(total);
-        /*for (List<String> list : results) {
+        for (List<String> list : results) {
             System.out.println(list);
-        }*/
+        }
 
     }
 }
