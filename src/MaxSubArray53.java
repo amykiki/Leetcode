@@ -4,23 +4,30 @@
 public class MaxSubArray53 {
     public int maxSubArray(int[] nums) {
         int Max  = nums[0];
-        int lsum = nums[0];
-        for (int i = 1; i < nums.length; i++) {
-            if (nums[i] >= 0) {
-                if (lsum < 0) {
-                    lsum = nums[i];
-                } else {
-                    lsum += nums[i];
-                }
-            } else {
-                if (lsum <= nums[i]) {
-                    lsum = nums[i];
-                } else {
-                    lsum += nums[i];
-                }
+        int p = 0;
+        while (p < nums.length && nums[p] <= 0) {
+            if (nums[p] > Max) {
+                Max = nums[p];
             }
-            if (lsum > Max) {
-                Max = lsum;
+            p++;
+        }
+        if (p < nums.length) {
+            int lsum = nums[p];
+            Max = lsum;
+            p++;
+            for (int i = p; i < nums.length; i++) {
+                if (nums[i] <= 0) {
+                    lsum += nums[i];
+                    continue;
+                }
+                if (lsum > 0) {
+                    lsum += nums[i];
+                } else {
+                    lsum = nums[i];
+                }
+                if (lsum > Max) {
+                    Max = lsum;
+                }
             }
         }
         return Max;
@@ -33,8 +40,8 @@ public class MaxSubArray53 {
 //        int[] nums = {4, -2, 1};
 //        int[] nums = {4, -2, 1, 6, 4};
 //        int[] nums = {-9, -8, -7, -6, -5, -4};
-//        int[] nums = {9, 8, -10, 6, 5, 4};
-        int[] nums = {22, -10, 20};
+        int[] nums = {9, 8, -20, 6, 5, 4};
+//        int[] nums = {22, -10, 20};
         int max = ms.maxSubArray(nums);
         System.out.println("max = " + max);
     }
