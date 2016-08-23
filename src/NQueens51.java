@@ -3,9 +3,11 @@ import java.util.*;
 /**
  * Created by Amysue on 2016/8/22.
  */
+/*改用bitwise来解决问题，效率更高，基本思想一致*/
 public class NQueens51 {
     private List<List<String>> results = new ArrayList<>();
     private int                N       = 0;
+    private Long               MASK    = 0L;
 
     public List<List<String>> solveNQueens(int n) {
         if (n == 1) {
@@ -18,15 +20,12 @@ public class NQueens51 {
         }
         Map<Integer, Integer> nq = new HashMap<>(n);
         N = n;
-        List<Integer> candidate = new ArrayList<>();
-        for (int i = 0; i < n; i++) {
-            candidate.add(i);
-        }
-        addQueen(nq, 0);
+        MASK = (long) (1 << n) - 1;
+        addQueen(nq, 0, 0L, 0L, 0L);
         return results;
     }
 
-    private void addQueen(Map<Integer, Integer> nq, int row) {
+    private void addQueen(Map<Integer, Integer> nq, int row, long col, long ld, long rd) {
         if (row == N) {
             List<String> result1 = new ArrayList<>();
             for (int i = 0; i < N; i++) {
@@ -39,50 +38,42 @@ public class NQueens51 {
             results.add(result1);
             return;
         }
-        int[] candidate = new int[N];
-        if (row > 0) {
-            for (int i = 0; i < row; i++) {
-                int len = row - i;
-                int y   = nq.get(i);
-                candidate[y] = -1;
-                int y1 = y + len;
-                removeItem(y1, candidate, N - 1);
-                int y2 = y - len;
-                removeItem(y2, candidate, N - 1);
-
-            }
-        }
-        for (int i = 0; i < candidate.length; i++) {
-            if (candidate[i] != -1) {
-                nq.put(row, i);
-                addQueen(nq, row + 1);
-            }
-
+        long status = ~(col | ld | rd) & MASK;
+        while (status > 0) {
+            long pos = status & -status;
+            int j = getJ(pos);
+            nq.put(row, j);
+            addQueen(nq, row+1, col | pos, (ld | pos)<<1, (rd | pos)>>1);
+            status -= pos;
         }
 
         return;
     }
 
-    private void removeItem(int value, int[] candidate, int Max) {
-        if (value >= 0 && value <= Max) {
-            candidate[value] = -1;
-            return;
+    private int getJ(long pos) {
+        int i = N;
+        while (pos > 0) {
+            pos >>= 1;
+            i--;
         }
-        return;
+        return i;
     }
 
 
     public static void main(String[] args) {
-        NQueens51          sn      = new NQueens51();
-        int                n       = 10;
+        NQueens51 sn = new NQueens51();
+        int       n  = 7;
         List<List<String>> results = sn.solveNQueens(n);
-        NQueens5102 sn2 = new NQueens5102();
+        NQueens5102        sn2      = new NQueens5102();
         List<List<String>> results2 = sn2.solveNQueens(n);
+//        NQueensTotal52     nt       = new NQueensTotal52();
+//        int                total    = nt.totalNQueens(n);
         System.out.println(results.size());
         System.out.println(results2.size());
-        for (List<String> list : results) {
-//            System.out.println(list);
-        }
+//        System.out.println(total);
+        /*for (List<String> list : results) {
+            System.out.println(list);
+        }*/
 
     }
 }

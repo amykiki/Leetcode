@@ -1,51 +1,36 @@
-import java.util.*;
+import java.util.Arrays;
+import java.util.BitSet;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Created by Amysue on 2016/8/23.
  */
-public class NQueens5102 {
-    private List<List<String>> results = new ArrayList<>();
-    private int                N       = 0;
-
-    public List<List<String>> solveNQueens(int n) {
+public class NQueensTotal5202 {
+    private int total = 0;
+    private int N = 0;
+    private int Len = 0;
+    private int M = 0;
+    public int totalNQueens(int n) {
         if (n == 1) {
-            List<String> result = Arrays.asList("Q");
-            results.add(result);
-            return results;
+            return 1;
         }
         if (n <= 3) {
-            return results;
+            return 0;
         }
+        N = n - 1;
+        Len = n;
         Map<Integer, Integer> nq = new HashMap<>(n);
-        N = n;
-        List<Integer> candidate = new ArrayList<>();
-        for (int i = 0; i < n; i++) {
-            candidate.add(i);
-        }
         addQueen(nq, 0);
-        return results;
+        return total;
     }
-
     private void addQueen(Map<Integer, Integer> nq, int row) {
         if (row == N) {
-            List<String> result1 = new ArrayList<>();
-            List<String> result2 = new ArrayList<>();
             boolean addTwo = nq.get(0)*2 < (N-1) ? true : false;
-            for (int i = 0; i < N; i++) {
-                char[] queens = new char[N];
-                Arrays.fill(queens, '.');
-                int j = nq.get(i);
-                queens[j] = 'Q';
-                result1.add(new String(queens));
-                if (addTwo) {
-                    queens[j] = '.';
-                    queens[N - 1 - j] = 'Q';
-                    result2.add(new String(queens));
-                }
-            }
-            results.add(result1);
             if (addTwo) {
-                results.add(result2);
+                total += 2;
+            } else {
+                total += 1;
             }
             return;
         }
@@ -83,5 +68,34 @@ public class NQueens5102 {
         }
         return;
     }
+    public int compute(int n) {
+        int m = (1 <<n) - 1;
+        return m;
+    }
 
+    public void computbit(int n) {
+        BitSet bs = new BitSet();
+        bs.set(0, true);
+        bs.set(n-1, true);
+    }
+
+    public static void main(String[] args) {
+        NQueensTotal5202 nt2 = new NQueensTotal5202();
+        int n = 9;
+        long m = (long)(1<<n) - 1;
+        System.out.println(m);
+        System.out.println(Long.toBinaryString(m));
+        nt2.computbit(n);
+        int i = 0x15;
+        System.out.println(Integer.toBinaryString(i));
+        while (i > 0) {
+            int pos = i & -i;
+            System.out.println(Integer.toBinaryString(pos));
+            int pos2 = i & (i-1);
+            System.out.println(Integer.toBinaryString(pos2));
+            i = pos2;
+        }
+
+
+    }
 }
