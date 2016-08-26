@@ -9,7 +9,7 @@ public class JumpGame55 {
         if (nums == null || nums.length <= 1) {
             return true;
         }
-        int N = nums.length - 1;
+        int   N       = nums.length - 1;
         int[] results = new int[2];
         results[0] = 0;
         results[1] = nums[0];
@@ -27,11 +27,11 @@ public class JumpGame55 {
     }
 
     private int jump(int[] nums, int[] results, int N) {
-        int low = results[0];
+        int low  = results[0];
         int high = results[1];
-        int                 max  = high;
-        for(int i = high; i > low; i--) {
-            int maxI  = nums[i] + i;
+        int max  = high;
+        for (int i = high; i > low; i--) {
+            int maxI = nums[i] + i;
             if (maxI >= N) {
                 return 1;
             }
@@ -49,10 +49,10 @@ public class JumpGame55 {
     }
 
     public static void main(String[] args) {
-        JumpGame55 jg   = new JumpGame55();
+        JumpGame55 jg = new JumpGame55();
 //        int[]      nums = {3, 2, 1, 0, 4};
 //        int[]      nums = {2,3,1,1,4};
-        int[]      nums = {2, 0, 3, 4, 4, 2, 3, 1, 4, 0};
+        int[] nums = {2, 0, 3, 4, 4, 2, 3, 1, 4, 0};
 //        int[]      nums = {2, 0};
 //        int[]      nums = {3, 5, 1, 1, 1, 5, 0, 3, 4, 2};
         System.out.println(jg.canJump(nums));
