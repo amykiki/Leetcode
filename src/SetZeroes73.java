@@ -15,22 +15,32 @@ public class SetZeroes73 {
         int rmark = -1;
         int cmark = -1;
         for(int i = 0; i < rows; i++) {
-            if (cmark >= 0 && matrix[i][cmark] == -1) {
-                markRowZeros(matrix, rmark, cmark, rows, cols, i);
-            } else {
-                for(int j = 0; j < cols; j++) {
-                    if (matrix[i][j] != 0) {
-                        continue;
-                    }
-                    if (cmark >= 0 && matrix[rmark][j] == -1) {
-                        continue;
-                    }
-                    if (cmark == -1) {
-                        rmark = i;
-                        cmark = j;
-                    }
+            for(int j = 0; j < cols; j++) {
+                if (matrix[i][j] != 0) {
+                    continue;
+                } else {
+                    rmark = i;
+                    cmark = j;
                     markRowZeros(matrix, rmark, cmark, rows, cols, i);
                     break;
+                }
+            }
+            if (cmark >= 0) {
+                break;
+            }
+        }
+        if (rmark >= 0) {
+            for(int i = rmark+1; i < rows; i++) {
+                if (matrix[i][cmark] == -1) {
+                    markRowZeros(matrix, rmark, cmark, rows, cols, i);
+                } else {
+                    for (int j = 0; j < cols; j++) {
+                        if (matrix[i][j] != 0 || matrix[rmark][j] == -1) {
+                            continue;
+                        }
+                        markRowZeros(matrix, rmark, cmark, rows, cols, i);
+                        break;
+                    }
                 }
             }
         }
@@ -47,25 +57,21 @@ public class SetZeroes73 {
 
     private void markRowZeros(int[][] matrix, int rmark, int cmark, int rows, int cols, int i) {
         for(int j = 0; j < cols; j++) {
-            if (matrix[i][j] != 0) {
-                matrix[i][j] = 0;
+            if (matrix[i][j] == 0 && matrix[rmark][j] != -1) {
+                markColZeors(matrix, cmark, rows, j, i);
+                matrix[rmark][j] = -1;
             } else {
-                if (matrix[rmark][j] != -1) {
-                    markColZeors(matrix, cmark, rows, j, i);
-                    matrix[rmark][j] = -1;
-                }
+                matrix[i][j] = 0;
             }
         }
     }
 
     private void markColZeors(int[][] matrix, int cmark, int rows, int j, int origI) {
         for(int i = 0; i < rows; i++) {
-            if (matrix[i][j] != 0) {
-                matrix[i][j] = 0;
+            if (matrix[i][j] == 0 && i > origI) {
+                matrix[i][cmark] = -1;
             } else {
-                if (i > origI) {
-                    matrix[i][cmark] = -1;
-                }
+                matrix[i][j] = 0;
             }
         }
     }
