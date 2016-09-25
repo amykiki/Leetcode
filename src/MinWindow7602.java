@@ -13,6 +13,7 @@ public class MinWindow7602 {
         str = s;
         List<Integer>           list    = new ArrayList<>();
         Map<Character, Integer> sizeMap = new HashMap<>();
+        Map<Character, Integer> map     = new HashMap<>();
         for (int i = 0; i < sum; i++) {
             char c = t.charAt(i);
             if (sizeMap.containsKey(c)) {
@@ -20,25 +21,27 @@ public class MinWindow7602 {
                 sizeMap.put(c, ++size);
             } else {
                 sizeMap.put(c, 1);
+                map.put(c, 0);
             }
         }
-        Map<Character, Integer> map    = new HashMap<>(sizeMap.size());
-        int                     start  = -1;
-        int                     len    = -1;
-        int                     offset = 0;
+        int start  = -1;
+        int len    = s.length();
+        int offset = 0;
         for (int i = 0; i < s.length(); i++) {
             char c = s.charAt(i);
             if (!sizeMap.containsKey(c)) continue;
+            int lastOffset = offset;
             offset = addMap(list, map, sizeMap, c, i, offset);
+            if (lastOffset == offset && start >= 0) continue;
             if (count == sum) {
                 int crtStart = list.get(offset);
                 int crtLen   = i - crtStart + 1;
-                if (start == -1 || crtLen < len) {
+                if (crtLen <= len) {
                     start = crtStart;
                     len = crtLen;
                 }
             }
-            if (len == sum) {
+            if (len == sum && count == sum) {
                 break;
             }
         }
@@ -49,15 +52,10 @@ public class MinWindow7602 {
     }
 
     private int addMap(List<Integer> list, Map<Character, Integer> map, Map<Character, Integer> sizeMap, char c, int index, int offset) {
-        if (!map.containsKey(c)) {
-            map.put(c, 1);
+        int num = map.get(c);
+        map.put(c, ++num);
+        if (num <= sizeMap.get(c)) {
             count++;
-        } else {
-            int num = map.get(c);
-            map.put(c, ++num);
-            if (num <= sizeMap.get(c)) {
-                count++;
-            }
         }
         list.add(index);
         if (count == sum) {
@@ -72,12 +70,12 @@ public class MinWindow7602 {
     }
 
     public static void main(String[] args) {
-        MinWindow7602 mw     = new MinWindow7602();
-       /* String        s      = "ADCBECODEBACC";
-        String        t      = "ABCC";*/
-        String        s      = "abc";
-        String        t      = "ac";
-        String        winstr = mw.minWindow(s, t);
+        MinWindow7602 mw = new MinWindow7602();
+        String        s  = "ADCBECODEBACC";
+        String        t  = "ABCC";
+//        String        s      = "aa";
+//        String        t      = "aa";
+        String winstr = mw.minWindow(s, t);
         System.out.println("winstr = " + winstr);
     }
 }
