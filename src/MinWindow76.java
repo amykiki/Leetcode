@@ -6,7 +6,7 @@ import java.util.*;
 public class MinWindow76 {
     public String minWindow(String s, String t) {
         int N = t.length();
-        List<Integer>           list    = new ArrayList<>(N);
+        TreeSet<Integer> set = new TreeSet<>();
         Map<Character, Integer> sizeMap = new HashMap<>();
         for (int i = 0; i < N; i++) {
             char c = t.charAt(i);
@@ -23,10 +23,10 @@ public class MinWindow76 {
         for (int i = 0; i < s.length(); i++) {
             char c = s.charAt(i);
             if (!sizeMap.containsKey(c)) continue;
-            addMap(list, map, sizeMap, c, i);
-            if (list.size() == N) {
-                int crtStart = list.get(0);
-                int crtLen = list.get(N-1) - crtStart + 1;
+            addMap(set, map, sizeMap, c, i);
+            if (set.size() == N) {
+                int crtStart = set.first();
+                int crtLen = i - crtStart + 1;
                 if (start == -1) {
                     start = crtStart;
                     len = crtLen;
@@ -42,7 +42,7 @@ public class MinWindow76 {
         return s.substring(start, len+start);
     }
 
-    private void addMap(List<Integer> list, Map<Character, LinkedList<Integer>> map, Map<Character, Integer> sizeMap, char c, int index) {
+    private void addMap(TreeSet<Integer> set, Map<Character, LinkedList<Integer>> map, Map<Character, Integer> sizeMap, char c, int index) {
         LinkedList<Integer> indexes;
         if (!map.containsKey(c)) {
             indexes = new LinkedList<>();
@@ -52,11 +52,11 @@ public class MinWindow76 {
             indexes = map.get(c);
             if (indexes.size() == sizeMap.get(c)) {
                 Integer m = indexes.removeFirst();
-                list.remove(m);
+                set.remove(m);
             }
             indexes.add(index);
         }
-        list.add(index);
+        set.add(index);
     }
 
     public static void main(String[] args) {
