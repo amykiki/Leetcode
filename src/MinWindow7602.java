@@ -38,6 +38,9 @@ public class MinWindow7602 {
                     len = crtLen;
                 }
             }
+            if (len == sum) {
+                break;
+            }
         }
         if (start == -1) {
             return "";
