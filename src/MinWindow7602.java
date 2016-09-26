@@ -25,7 +25,7 @@ public class MinWindow7602 {
             }
         }
         int start  = -1;
-        int len    = s.length();
+        int len    = s.length() + 1;
         int offset = 0;
         for (int i = 0; i < s.length(); i++) {
             char c = s.charAt(i);
@@ -36,13 +36,13 @@ public class MinWindow7602 {
             if (count == sum) {
                 int crtStart = list.get(offset);
                 int crtLen   = i - crtStart + 1;
-                if (crtLen <= len) {
+                if (crtLen < len) {
                     start = crtStart;
                     len = crtLen;
                 }
-            }
-            if (len == sum && count == sum) {
-                break;
+                if (len == sum) {
+                    break;
+                }
             }
         }
         if (start == -1) {
