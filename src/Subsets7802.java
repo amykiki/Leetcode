@@ -15,6 +15,7 @@ public class Subsets7802 {
                 list.add(nums[i]);
                 results.add(list);
             }
+//            这里是重点
             resultsSize *= 2;
         }
         return results;
