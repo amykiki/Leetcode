@@ -1,14 +1,9 @@
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
 /**
  * Created by zoushumin on 2016/12/12.
  */
 public class WordSearch79 {
-
-    private Map<Integer, Map<Integer, Set<Integer>>> wordsFailed = new HashMap<>();
     private char[] words;
     private int maxY, maxX;
     private char[][] charBoard;
@@ -23,7 +18,7 @@ public class WordSearch79 {
         for(int i = 0; i < maxX; i++) {
             for (int j = 0; j < maxY; j++) {
                 Set<Integer> usedChars = new HashSet<>();
-                if (find(i, j, 0, usedChars)) {
+                if (find(calcIndex(i, j), 0, usedChars)) {
                     return true;
                 }
             }
@@ -31,78 +26,79 @@ public class WordSearch79 {
         return false;
     }
 
-    private boolean find(int x, int y, int wordIndex, Set<Integer> usedChars) {
-        if (wordIndex == words.length) {
-            return true;
-        }
-        if (x >= maxX || x < 0 || y >= maxY || y < 0) {
+    private boolean find(int idx, int wordIdx, Set<Integer> usedChars) {
+        int indexX = idx / maxY;
+        int indexY = idx % maxY;
+
+        if (charBoard[indexX][indexY] != words[wordIdx]) {
             return false;
-        }
-        if (usedChars.contains(calcIndex(x, y))) {
-            return false;
-        }
-        if (charBoard[x][y] != words[wordIndex]) {
-            return false;
-        }
-        if (wordsFailed.get(wordIndex)!= null && wordsFailed.get(wordIndex).contains(calcIndex(x, y))) {
-            return false;
-        }
-        usedChars.add(calcIndex(x, y));
-        if (find(x, y + 1, wordIndex + 1, usedChars)) {
+        } else if (wordIdx == words.length - 1) {
             return true;
         }
-        if (find(x, y - 1, wordIndex + 1, usedChars)) {
-            return true;
+        /*Set<Integer> failedChars = new HashSet<>();
+        if (wordsFailed.get(wordIdx) != null && wordsFailed.get(wordIdx).get(idx) != null) {
+            failedChars = wordsFailed.get(wordIdx).get(idx);
+        }*/
+        List<Integer> nextIdxes = nextIdxes(idx, usedChars);
+        if (nextIdxes != null) {
+            usedChars.add(idx);
+            for (int nextI : nextIdxes) {
+                if (find(nextI, wordIdx + 1, usedChars)) {
+                    return true;
+                }
+            }
+            /*Map<Integer, Set<Integer>> map;
+            if (wordsFailed.get(wordIdx) == null) {
+                map = new HashMap<>();
+                wordsFailed.put(wordIdx, map);
+            } else {
+                map = wordsFailed.get(wordIdx);
+            }
+            map.put(idx, failedChars);*/
         }
-        if (find(x - 1, y, wordIndex + 1, usedChars)) {
-            return true;
-        }
-        if (find(x + 1, y, wordIndex + 1, usedChars)) {
-            return true;
-        }
-        usedChars.remove(calcIndex(x, y));
-        if (wordsFailed.get(wordIndex) != null) {
-            wordsFailed.get(wordIndex).add(calcIndex(x, y));
-        } else {
-            Set<Integer> sets = new HashSet<>();
-            sets.add(calcIndex(x, y));
-            wordsFailed.put(wordIndex, sets);
-        }
+        usedChars.remove(idx);
         return false;
     }
+
+    private List<Integer> nextIdxes(int index, Set<Integer> usedChars) {
+        List<Integer> indexes = new ArrayList<>();
+        int upIndex = index - maxY;
+        int downIndex = index + maxY;
+        int leftIndex = index - 1;
+        int rightIndex = index + 1;
+
+        int indexX = index / maxY;
+        int indexY = index % maxY;
+        if (indexX > 0 && !usedChars.contains(upIndex)) {
+            indexes.add(upIndex);
+        }
+        if (indexX < (maxX - 1) && !usedChars.contains(downIndex)) {
+            indexes.add(downIndex);
+        }
+        if (indexY > 0 && !usedChars.contains(leftIndex)) {
+            indexes.add(leftIndex);
+        }
+
+        if (indexY < (maxY - 1) && !usedChars.contains(rightIndex)) {
+            indexes.add(rightIndex);
+        }
+        return indexes.isEmpty() ? null : indexes;
+    }
+
+
 
     private int calcIndex(int x, int y) {
         return x*maxY + y;
     }
 
-    private void addFailChar(int x, int y, int nextX, int nextY, int wordIndex) {
-        Map<Integer, Set<Integer>> map;
-        if (wordsFailed.get(wordIndex) != null) {
-            map = wordsFailed.get(wordIndex);
-        } else {
-            map = new HashMap<>();
-            wordsFailed.put(wordIndex, map);
-        }
-        int key = calcIndex(x, y);
-        int value = calcIndex(nextX, nextY);
-        if (map.containsKey(key)) {
-            map.get(key).add(value);
-        } else {
-            Set<Integer> set = new HashSet<>();
-            set.add(value);
-            map.put(key, set);
-        }
-    }
-
-    private void checkFailChar(int x, int y, int nextX, int nextY, int wordIndex) {
-
-    }
 
     public static void main(String[] args) {
 //        char[][] board = {{'A', 'B', 'C', 'E'}, {'S', 'F', 'C', 'S'}, {'A', 'D', 'E', 'E'}};
 //        String word = "CFDE";
 //        String word = "ABCCED";
 //        String word = "SEE";
+//        String word = "ABCB";
+
 
         char[][] board = {"ABCE".toCharArray(), "SFES".toCharArray(), "ADEE".toCharArray()};
         String word = "ABCESEEEFS";
