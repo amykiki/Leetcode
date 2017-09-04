@@ -1,5 +1,7 @@
-import java.util.*;
-import java.util.function.Predicate;
+import java.util.Arrays;
+import java.util.HashSet;
+import java.util.Random;
+import java.util.Set;
 
 /**
  * Created by Amysue on 2016/9/12.
