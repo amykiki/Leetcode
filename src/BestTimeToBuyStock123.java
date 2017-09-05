@@ -32,6 +32,8 @@ public class BestTimeToBuyStock123 {
             }
             firstHalfProfit = prices[firstHalf[1]] - prices[firstHalf[0]];
             secondHalfProfit = prices[secondHalf[1]] - prices[secondHalf[0]];
+            System.out.println(CommonUtil.printArray(firstHalf));
+            System.out.println(CommonUtil.printArray(secondHalf));
             if ((firstHalfProfit + secondHalfProfit) > maxProfit) {
                 maxProfit = firstHalfProfit + secondHalfProfit;
                 /*result[0] = firstHalf[0];
@@ -78,7 +80,7 @@ public class BestTimeToBuyStock123 {
                 sellPoint = nextSellPoint;
             }
         }
-        if (buyPoint == -1) {
+        if (buyPoint == -1 || sellPoint == -1) {
             buyPoint = lastSellPoint;
             sellPoint = lastSellPoint;
         }
@@ -138,7 +140,7 @@ public class BestTimeToBuyStock123 {
 //        int[] prices = {10, 9, 8, 7, 6, 5, 4, 3, 2, 1};
 //        int[] prices = {10, 10, 10, 10, 10, 10, 10, 10};
 //        int[] prices = {1, 2};
-        int[] prices = {1, 2, 4};
+        int[] prices = {6,1,3,2,4,7};
         System.out.println("prices = " + CommonUtil.printArray(prices));
 
         int maxProfit = bttb.maxProfit(prices);
