@@ -32,8 +32,6 @@ public class BestTimeToBuyStock123 {
             }
             firstHalfProfit = prices[firstHalf[1]] - prices[firstHalf[0]];
             secondHalfProfit = prices[secondHalf[1]] - prices[secondHalf[0]];
-            System.out.println(CommonUtil.printArray(firstHalf));
-            System.out.println(CommonUtil.printArray(secondHalf));
             if ((firstHalfProfit + secondHalfProfit) > maxProfit) {
                 maxProfit = firstHalfProfit + secondHalfProfit;
                 /*result[0] = firstHalf[0];
@@ -62,8 +60,9 @@ public class BestTimeToBuyStock123 {
             int lastSellPrice = prices[lastSellPoint];
             for(int i = start; i < lastSellPoint; i++) {
                 if ((lastSellPrice - prices[i]) >= maxProfit) {
-                    maxProfit = lastSellPoint - prices[i];
+                    maxProfit = lastSellPrice - prices[i];
                     buyPoint = i;
+                    sellPoint = lastSellPoint;
                 }
             }
         }
@@ -71,7 +70,7 @@ public class BestTimeToBuyStock123 {
         //获取在已找到的卖点后面的最大的买卖点
         int nextSTart = lastSellPoint +1;
         if(nextSTart < prices.length){
-            int[] nextResults = findNextMaxProfit(nextSTart, prices.length - 1, nextSTart, nextSTart, prices);
+            int[] nextResults = findNextMaxProfit(nextSTart, prices.length - 1, nextSTart, nextSTart,  prices);
             int nextBuyPoint = nextResults[0];
             int nextSellPoint = nextResults[1];
             int nextMaxProfit = prices[nextSellPoint] - prices[nextBuyPoint];
