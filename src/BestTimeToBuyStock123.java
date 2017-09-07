@@ -8,7 +8,7 @@ public class BestTimeToBuyStock123 {
         if (prices == null || prices.length <= 1) {
             return 0;
         }
-        int[] firstHalf = {0, 0};
+        int[] firstHalf = {0, 0, 0};
         int[] secondHalf = {0,0};
         int lastSellPoint = -1;
         int secondHalfStart = 0;
@@ -19,19 +19,21 @@ public class BestTimeToBuyStock123 {
         int secondHalfProfit = 0;
         int maxProfit = 0;
 //        int[] result = new int[4];
+
         while (true) {
+            firstHalfStart = secondHalf[0];
             secondHalf = findMaxProfit(secondHalfStart, lastSellPoint, prices);
-            firstHalf = findNextMaxProfit(firstHalfStart, secondHalf[0] - 1, firstHalf[0], firstHalf[1], prices);
+            firstHalf = findNextMaxProfit(firstHalfStart, secondHalf[0] - 1, firstHalf[0], firstHalf[1], firstHalf[2], prices);
             secondHalfStart = secondHalf[0] + 1;
             lastSellPoint = secondHalf[1];
-            if (firstHalf[0] != 0) {
-                firstHalfStart = firstHalf[1] + 1;
-            }
             if (count == 0) {
                 oneTimeSellPoint = secondHalf[1];
             }
             firstHalfProfit = prices[firstHalf[1]] - prices[firstHalf[0]];
             secondHalfProfit = prices[secondHalf[1]] - prices[secondHalf[0]];
+          /*  System.out.println("---------------------count = " + count + "-------------------------");
+            System.out.println(CommonUtil.printArray(secondHalf));
+            System.out.println(CommonUtil.printArray(firstHalf));*/
             if ((firstHalfProfit + secondHalfProfit) > maxProfit) {
                 maxProfit = firstHalfProfit + secondHalfProfit;
                 /*result[0] = firstHalf[0];
@@ -44,7 +46,8 @@ public class BestTimeToBuyStock123 {
             }
             count++;
         }
-       /* System.out.println(CommonUtil.printArray(result));
+        /*System.out.println("------------result--------------------");
+        System.out.println(CommonUtil.printArray(result));
         System.out.println("firstHalfProfit = " + (prices[result[1]] - prices[result[0]]));
         System.out.println("secondHalfProfit = " + (prices[result[3]] - prices[result[2]]));*/
         return maxProfit;
@@ -70,7 +73,7 @@ public class BestTimeToBuyStock123 {
         //获取在已找到的卖点后面的最大的买卖点
         int nextSTart = lastSellPoint +1;
         if(nextSTart < prices.length){
-            int[] nextResults = findNextMaxProfit(nextSTart, prices.length - 1, nextSTart, nextSTart,  prices);
+            int[] nextResults = findNextMaxProfit(nextSTart, prices.length - 1, nextSTart, nextSTart,  nextSTart, prices);
             int nextBuyPoint = nextResults[0];
             int nextSellPoint = nextResults[1];
             int nextMaxProfit = prices[nextSellPoint] - prices[nextBuyPoint];
@@ -101,8 +104,8 @@ public class BestTimeToBuyStock123 {
      * @param prices
      * @return
      */
-    private int[] findNextMaxProfit(int start, int end, int currentBuyPoint, int currentySellPoint, int[] prices) {
-        int minPoint = currentBuyPoint;
+    private int[] findNextMaxProfit(int start, int end, int currentBuyPoint, int currentySellPoint, int currentMinPoint, int[] prices) {
+        int minPoint = currentMinPoint;
         int maxProfit = prices[currentySellPoint] - prices[currentBuyPoint];
         if (end >= start) {
             for(int i = start; i <= end; i++) {
@@ -120,9 +123,10 @@ public class BestTimeToBuyStock123 {
         }
 
 
-        int[] results = new int[2];
+        int[] results = new int[3];
         results[0] = currentBuyPoint;
         results[1] = currentySellPoint;
+        results[2] = minPoint;
         return results;
 
     }
@@ -139,7 +143,8 @@ public class BestTimeToBuyStock123 {
 //        int[] prices = {10, 9, 8, 7, 6, 5, 4, 3, 2, 1};
 //        int[] prices = {10, 10, 10, 10, 10, 10, 10, 10};
 //        int[] prices = {1, 2};
-        int[] prices = {6,1,3,2,4,7};
+//        int[] prices = {6,1,3,2,4,7};
+        int[] prices = {3,3,5,0,0,3,1,4};
         System.out.println("prices = " + CommonUtil.printArray(prices));
 
         int maxProfit = bttb.maxProfit(prices);
