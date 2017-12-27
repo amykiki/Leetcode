@@ -7,25 +7,31 @@ public class RotateArray189 {
         if (k == 0) {
             return;
         }
-        int N = nums.length;
-        int[] copy;
-
-        if (k < N - k) {
-            copy = new int[k];
-            System.arraycopy(nums, N - k, copy, 0, k);
-            for(int i = N - k - 1 ; i >= 0; i--) {
-                nums[i + k] = nums[i];
-            }
-            System.arraycopy(copy, 0, nums, 0, k);
-        }else {
-            copy = new int[N - k];
-            System.arraycopy(nums, 0, copy, 0, N - k);
-            for(int i = N - k; i < N; i++) {
-                nums[i - (N - k)] = nums[i];
-            }
-            System.arraycopy(copy, 0, nums, k, N - k);
+        int len = nums.length;
+        int cmp = len % k;
+        int num = 1;
+        if (cmp == 0) {
+            num = k;
+        } else if ( (k > len /2) && (len % cmp) == 0) {
+            num = cmp;
         }
-
+        int nextVal;
+        int lastVal;
+        int next;
+        for(int i = 0; i < num; i++) {
+            next = (i + k) % len;
+            lastVal = nums[i];
+            while (true) {
+                nextVal = nums[next];
+                nums[next] = lastVal;
+                lastVal = nextVal;
+                next = (next + k) % len;
+                if (next == i) {
+                    nums[i] = lastVal;
+                    break;
+                }
+            }
+        }
     }
 
     private void shiftArray(int start, int target, int len, int[] nums) {
@@ -38,10 +44,24 @@ public class RotateArray189 {
 //        int[] nums = {1, 2, 3, 4, 5, 6, 7};
 //        int k = 4;
 //        int[] nums = {1, 2};
-//        int k = 0;
-        int[] nums = {1, 2, 3, 4, 5, 6};
-        int k = 4;
-        ra.rotate(nums, k);
+//        int k = 1;
+        int[] nums = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11};
+        int k = 5;
+        /**
+         * 右移7位
+         * 5, 6, 7, 8, 9, 10, 11, 0, 1, 2, 3, 4
+         * 0 -> 7 -> 2 -> 9 -> 4 -> 11 -> 6 -> 1 -> 8 -> 3 -> 10 -> 5 -> 0
+         * 右移4位
+         * 0 -> 4 -> 2 -> 0
+         * 1 -> 5 -> 3 -> 1
+         * 右移2位
+         * 0 -> 2 -> 4 -> 0
+         * 1 -> 3 -> 5 -> 1
+         *
+         */
 
+
+        ra.rotate(nums, k);
+        System.out.println(CommonUtil.printArray(nums));
     }
 }
