@@ -19,6 +19,10 @@ public class ListNode {
     }
     
     public static void printNods(ListNode l) {
+        if (l == null) {
+            System.out.println("NULL List!");
+            return;
+        }
         while (l.next != null) {
             System.out.print(l.val + "->");
             l = l.next;
