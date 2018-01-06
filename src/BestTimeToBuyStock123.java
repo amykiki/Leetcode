@@ -1,4 +1,4 @@
-import java.util.Random;
+import utils.CommonUtil;
 
 /**
  * Created by zoushumin on 2017/9/3.
@@ -32,8 +32,8 @@ public class BestTimeToBuyStock123 {
             firstHalfProfit = prices[firstHalf[1]] - prices[firstHalf[0]];
             secondHalfProfit = prices[secondHalf[1]] - prices[secondHalf[0]];
           /*  System.out.println("---------------------count = " + count + "-------------------------");
-            System.out.println(CommonUtil.printArray(secondHalf));
-            System.out.println(CommonUtil.printArray(firstHalf));*/
+            System.out.println(utils.CommonUtil.arrayToStr(secondHalf));
+            System.out.println(utils.CommonUtil.arrayToStr(firstHalf));*/
             if ((firstHalfProfit + secondHalfProfit) > maxProfit) {
                 maxProfit = firstHalfProfit + secondHalfProfit;
                 /*result[0] = firstHalf[0];
@@ -47,7 +47,7 @@ public class BestTimeToBuyStock123 {
             count++;
         }
         /*System.out.println("------------result--------------------");
-        System.out.println(CommonUtil.printArray(result));
+        System.out.println(utils.CommonUtil.arrayToStr(result));
         System.out.println("firstHalfProfit = " + (prices[result[1]] - prices[result[0]]));
         System.out.println("secondHalfProfit = " + (prices[result[3]] - prices[result[2]]));*/
         return maxProfit;
@@ -145,7 +145,7 @@ public class BestTimeToBuyStock123 {
 //        int[] prices = {1, 2};
 //        int[] prices = {6,1,3,2,4,7};
         int[] prices = {3,3,5,0,0,3,1,4};
-        System.out.println("prices = " + CommonUtil.printArray(prices));
+        System.out.println("prices = " + CommonUtil.arrayToStr(prices));
 
         int maxProfit = bttb.maxProfit(prices);
         System.out.println("maxProfit = " + maxProfit);
