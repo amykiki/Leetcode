@@ -34,8 +34,8 @@ public class P1980 {
             steps[i] = step;
             step *= 10;
         }
-//        CommonUtil.printArray(nums);
-//        CommonUtil.printArray(steps);
+        CommonUtil.printArray(nums);
+        CommonUtil.printArray(steps);
         tempN = N;
         int last = 0;
         for(int i = 0; i < length; i++) {
@@ -67,7 +67,7 @@ public class P1980 {
             results[i] = count * steps[i] + remain;
             last += r1*steps[i];
         }
-//        CommonUtil.printArray(results);
+        CommonUtil.printArray(results);
         int sum = 0;
         for(int i = 0; i < length; i++) {
             sum += results[i];
