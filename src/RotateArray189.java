@@ -1,3 +1,5 @@
+import utils.CommonUtil;
+
 public class RotateArray189 {
     public void rotate(int[] nums, int k) {
         if (nums.length <= 1 || k <= 0) {
@@ -62,6 +64,6 @@ public class RotateArray189 {
 
 
         ra.rotate(nums, k);
-        System.out.println(CommonUtil.printArray(nums));
+        System.out.println(CommonUtil.arrayToStr(nums));
     }
 }

@@ -95,7 +95,7 @@ public class FourSum01803 {
             }
         }
         /*System.out.println(Arrays.toString(nums));
-        printArray(nums);
+        arrayToStr(nums);
         System.out.println(twoSum);
         System.out.println(sameSum);*/
         return results;
